@@ -58,15 +58,17 @@ def decode(lis,encodedStr):
 def run():
     s=input('압축할 문자열을 입력해주세요.\n')
     charLis,encodedStr=encode(s)
-    print('변환 후 :',encodedStr)
+    print('압축 후 :',encodedStr)
     decodedStr=decode(charLis,encodedStr)
     print('복원 후 :',decodedStr)
     if s==decodedStr:
-        print('변환 전과 복원 후가 일치합니다.')
+        print('압축 전과 복원 후가 일치합니다.')
     beforeMem=len(s)*8
-    afterMem=len(encodedStr)+len(str(charLis))*8
+    afterMem=len(encodedStr)
     print('압축 전 용량 : {} * 1 byte = {} * 8 bit = {} bit'.format(len(s),len(s),beforeMem))
-    print('압축 후 용량 : {} * 1 bit = {} bit'.format(len(encodedStr),afterMem))
-    print('압축 후 기존 용량의 %.2f%%가 되었습니다.' % ((afterMem/beforeMem)*100))
+    print('압축 후 용량(허프만 트리 용량 미포함) : {} * 1 bit = {} bit'.format(len(encodedStr),afterMem))
+    print('압축 후 용량(허프만 트리 용량 포함) : {} * 1 bit + {} * 8 bit = {} bit'.format(len(encodedStr),len(str(charLis)),afterMem+len(str(charLis))*8))
+    print('압축 후 기존 용량의 %.2f%%가 되었습니다.(허프만 트리의 용량 미포함)' % ((afterMem/beforeMem)*100))
+    print('압축 후 기존 용량의 %.2f%%가 되었습니다.(허프만 트리 용량 포함)' % (((afterMem+len(str(charLis))*8)/beforeMem)*100))
 
 run()
